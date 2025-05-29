@@ -1,5 +1,5 @@
 
-# Blue-Green Deployment Strategy for Salesforce: Complete Implementation Guide
+# Blue-Green Deployment Strategy for Salesforce: Complete Implementation Guide (Claude 4)
 
 ## What is Blue-Green Deployment?
 
