@@ -12,6 +12,8 @@ sequenceDiagram
     Note over Blue: Currently serving 100% traffic
     Note over Green: Idle environment
     
+    activate Blue %%% Explicitly activate Blue to start its lifeline
+    
     Dev->>GH: Push to main branch (v2.0)
     activate GH
     GH->>Green: 1. Deploy new version to Green
