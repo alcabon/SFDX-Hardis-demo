@@ -1,6 +1,31 @@
 
 # Complete Salesforce Deployment Methods Comparison (Including DevOps Center)
 
+Looking at the document, I can see why this might be confusing. The table shows Gearset as "⚠️ Limited" for Large Data Deployment, but let me clarify what this means based on the detailed explanations provided.
+
+According to the document, Gearset's limitation for large data deployments is specifically about **data volume and scale**, not metadata deployments. Here's what the document states:
+
+**For Large Data Deployments:**
+- Gearset: "Basic data deployment, some limitations on volume" and "Handles moderate data volumes, some enterprise limitations"
+
+The document distinguishes between **metadata deployments** (where Gearset excels with "✅ Excellent" metadata coverage) and **data deployments** (moving actual records/data between orgs).
+
+**Gearset's strengths:**
+- Excellent metadata coverage and deployment capabilities
+- Fast deployment speed
+- Good rollback capabilities
+- Multi-org management
+- User-friendly interface
+
+**Gearset's data deployment limitations:**
+- Can handle moderate data volumes but has constraints at enterprise scale
+- Not designed for massive data migrations (millions of records)
+- Limited compared to solutions that can leverage Bulk API extensively or custom data loading scripts
+
+So when the document says Gearset is "limited" for large deployments, it's specifically referring to **large-scale data movements**, not the deployment of metadata, configurations, or code. For most standard Salesforce deployments involving metadata, Gearset is actually rated as excellent.
+
+
+
 | **Criteria** | **Change Sets** | **DevOps Center** | **Home-made Pipeline** | **Gearset** | **SFDX-Hardis** |
 |--------------|-----------------|-------------------|------------------------|-------------|------------------|
 | **Large Data Deployment** | ❌ Very Limited | ❌ No Support | ✅ Excellent | ⚠️ Limited | ✅ Good |
