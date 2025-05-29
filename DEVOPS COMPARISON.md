@@ -7,7 +7,7 @@ Based on my research, here's the detailed breakdown:
 
 - **Gearset** has a much more extensive ecosystem with 20+ native integrations including major Git hosting providers, project tracking software, testing solutions, and messaging tools. Their webhook system supports outgoing webhooks to CI jobs that automatically post to third party apps, with sophisticated payload customization.
 - **SFDX-Hardis** has a more focused set of integrations, primarily around GitLab, GitHub, Azure, BitBucket, Microsoft Teams and API notifications to external apis like Grafana. Their approach is more configuration-based rather than GUI-driven.
-- The **key difference** is that **Gearset** provides** ready-to-use, enterprise-grade integrations with minimal setup**, while **SFDX-Hardis** offers b**asic but flexible API notification capabilities that require more manual configuration** but come at no licensing cost.
+- The **key difference** is that **Gearset** provides **ready-to-use, enterprise-grade integrations with minimal setup**, while **SFDX-Hardis** offers **basic but flexible API notification capabilities that require more manual configuration** but come at no licensing cost.
 - For **complex integration requirements with multiple external systems**, Gearset's pre-built connectors would save significant development time.
 - For **simpler notification needs or budget-conscious projects**, SFDX-Hardis provides adequate webhook/API capabilities.
 
