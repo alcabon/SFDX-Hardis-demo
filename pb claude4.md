@@ -12,12 +12,15 @@ sequenceDiagram
     Note over Blue: Currently serving 100% traffic
     Note over Green: Idle environment
     
-    activate Blue %%% Explicitly activate Blue to start its lifeline
+    activate Blue 
+    %%% Blue is active as current production
     
     Dev->>GH: Push to main branch (v2.0)
-    activate GH
+    activate GH 
+    %%% GH Actions becomes active
     GH->>Green: 1. Deploy new version to Green
-    activate Green
+    activate Green 
+    %%% Green becomes active for deployment
     Green-->>GH: Deployment successful
     
     GH->>Green: 2. Run automated tests
@@ -32,6 +35,8 @@ sequenceDiagram
     Note over GH: Pre-switch validation complete
     
     GH->>DNS: 5. Switch 10% traffic to Green
+    activate DNS 
+    %%% DNS/Load Balancer becomes active
     DNS->>Users: Route 10% requests to Green
     Users->>Green: Limited production traffic
     
@@ -45,16 +50,20 @@ sequenceDiagram
     Monitor-->>GH: Performance stable (checkmark)
     
     GH->>DNS: 9. Switch 100% traffic to Green
-    DNS->>Users: Route all requests to Green
-    deactivate Blue
+    deactivate Blue 
+    %%% Blue is now inactive for traffic
+    activate Green 
+    %%% Green becomes fully active for all production traffic
+    deactivate DNS 
+    %%% DNS/Load Balancer's main routing task is done
     
     Note over Green: Green is now Production
     Note over Blue: Blue becomes new Staging
     
     GH->>Blue: 10. Update Blue for next deployment
-    deactivate Green
-    deactivate GH
-    
+    deactivate GH 
+    %%% GH Actions completes its main task
+
     Users->>Green: All production traffic
     Green-->>Users: v2.0 responses
 ```
