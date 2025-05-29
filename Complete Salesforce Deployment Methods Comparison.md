@@ -123,6 +123,215 @@ The Salesforce DevOps landscape is rapidly evolving with increased focus on:
 - Enhanced testing integration
 - Multi-cloud deployment strategies
 
+----------
+
+# SFDX-Hardis Commands by Feature
+
+## Large Data Deployment ✅ Good
+```bash
+# Data export from source org
+sfdx hardis:data:export --target-org myorg --object-list Account,Contact,Opportunity
+
+# Data import to target org
+sfdx hardis:data:import --target-org targetorg --input-dir ./data
+
+# Bulk data operations
+sfdx hardis:data:tree:export --target-org myorg --query "SELECT Id,Name FROM Account LIMIT 1000"
+sfdx hardis:data:tree:import --target-org targetorg --plan data-plan.json
+
+# Large dataset handling
+sfdx hardis:data:export:bulk --target-org myorg --objects Account,Contact --batch-size 10000
+```
+
+## External API Integration ✅ Good
+```bash
+# Webhook notifications setup
+sfdx hardis:project:configure:webhooks --webhook-url https://api.example.com/notify
+
+# API integration during deployment
+sfdx hardis:project:deploy:sources --post-deploy-hook "curl -X POST https://api.example.com/deploy-complete"
+
+# External service connectivity tests
+sfdx hardis:misc:connectedapp:create --name "External Integration" --callback-url https://myapp.com/callback
+
+# Notification commands
+sfdx hardis:project:deploy:start --notify-slack-channel #deployment --notify-email team@company.com
+```
+
+## Unlocked Packages - Modular Support ⚠️ Limited
+```bash
+# Package installation
+sfdx hardis:package:install --package-id 04t... --target-org myorg
+
+# Package version management
+sfdx hardis:package:version:list --package-name MyPackage
+
+# Basic package operations
+sfdx hardis:package:dependencies:install --target-org myorg
+
+# Package metadata handling
+sfdx hardis:project:deploy:sources --include-packages --target-org myorg
+```
+
+## Complexity & Learning Curve ⚠️ Moderate
+```bash
+# Simplified deployment command
+sfdx hardis:project:deploy:quick --target-org myorg
+
+# Guided setup
+sfdx hardis:project:init --template standard
+
+# Documentation generation
+sfdx hardis:doc:generate --output-dir ./docs
+
+# Health check commands
+sfdx hardis:org:diagnose:legacyapi --target-org myorg
+sfdx hardis:project:audit:callincallout --target-org myorg
+```
+
+## Cost ✅ Open Source
+```bash
+# Installation (free)
+npm install -g sfdx-hardis
+
+# Project initialization
+sfdx hardis:project:init
+
+# No licensing commands needed - all features available
+sfdx hardis:misc:licenses:check # Shows open source license info
+```
+
+## Deployment Speed ✅ Fast
+```bash
+# Optimized deployment
+sfdx hardis:project:deploy:sources --target-org myorg --check-only false --test-level RunSpecifiedTests
+
+# Parallel deployment
+sfdx hardis:project:deploy:sources --target-org myorg --parallel
+
+# Delta deployment (only changes)
+sfdx hardis:project:deploy:delta --target-org myorg --from HEAD~1
+
+# Quick deployment for validated packages
+sfdx hardis:project:deploy:quick --target-org myorg --deployment-id 0Af...
+```
+
+## Rollback Capabilities ✅ Good
+```bash
+# Backup before deployment
+sfdx hardis:org:backup:metadata --target-org myorg --output-dir ./backup
+
+# Restore from backup
+sfdx hardis:org:restore:metadata --target-org myorg --backup-dir ./backup
+
+# Git-based rollback
+sfdx hardis:project:deploy:sources --target-org myorg --git-commit HEAD~1
+
+# Deployment history
+sfdx hardis:org:retrieve:deployment:history --target-org myorg
+```
+
+## Multi-Org Management ✅ Good
+```bash
+# Configure multiple orgs
+sfdx hardis:org:configure:pools --config-file org-pools.json
+
+# Deploy to multiple environments
+sfdx hardis:project:deploy:sources --target-org-list dev,staging,prod
+
+# Environment comparison
+sfdx hardis:org:compare:metadata --source-org dev --target-org prod
+
+# Multi-org data sync
+sfdx hardis:data:export --source-org prod --target-org-list dev,staging
+```
+
+## Compliance & Auditing ✅ Good
+```bash
+# Deployment logging
+sfdx hardis:project:deploy:sources --target-org myorg --verbose --log-file deployment.log
+
+# Audit trail generation
+sfdx hardis:org:audit:trail --target-org myorg --output-file audit.json
+
+# Compliance reporting
+sfdx hardis:project:audit:profile --target-org myorg --output-format excel
+
+# Git integration for compliance
+sfdx hardis:project:deploy:sources --target-org myorg --git-tag v1.2.3
+```
+
+## Metadata Coverage ✅ Excellent
+```bash
+# Complete metadata retrieval
+sfdx hardis:org:retrieve:sources:all --target-org myorg
+
+# Specific metadata types
+sfdx hardis:org:retrieve:sources:metadata --metadata-types CustomObject,Flow,ApexClass --target-org myorg
+
+# Metadata analysis
+sfdx hardis:project:audit:metadata --target-org myorg
+
+# All supported metadata deployment
+sfdx hardis:project:deploy:sources --target-org myorg --metadata-dir force-app
+```
+
+## Team Collaboration ✅ Excellent
+```bash
+# Branch management
+sfdx hardis:project:create:branch --branch-name feature/new-functionality
+
+# Merge conflict resolution
+sfdx hardis:project:merge:conflict:resolve --auto-resolve
+
+# Team workspace setup
+sfdx hardis:work:new --work-type feature --name "User Story 123"
+
+# Collaborative deployment
+sfdx hardis:project:deploy:sources --target-org myorg --notify-team --approval-required
+```
+
+## Source Control ✅ Multiple Git Providers
+```bash
+# Git provider configuration
+sfdx hardis:project:configure:git --provider github|gitlab|azure|bitbucket
+
+# Repository initialization
+sfdx hardis:project:init --git-provider gitlab --repo-url https://gitlab.com/myorg/project
+
+# Multi-provider support
+sfdx hardis:project:sync --git-provider azure --branch main
+
+# Git hooks setup
+sfdx hardis:project:configure:git:hooks --pre-commit --pre-push
+```
+
+## Additional Core Commands
+
+### Project Management
+```bash
+# Project initialization with templates
+sfdx hardis:project:init --template scratch-org
+
+# Configuration management
+sfdx hardis:project:configure:auth --target-org myorg
+
+# Clean and optimize
+sfdx hardis:project:clean:references --target-org myorg
+```
+
+### Monitoring and Health
+```bash
+# Org monitoring
+sfdx hardis:org:monitor:limits --target-org myorg
+
+# Performance analysis
+sfdx hardis:project:audit:performance --target-org myorg
+
+# Security scan
+sfdx hardis:project:audit:security --target-org myorg
+```
+
 ### **Strategic Decision Framework**
 1. **Start with DevOps Center** if transitioning from Change Sets
 2. **Consider Gearset** for immediate productivity gains
