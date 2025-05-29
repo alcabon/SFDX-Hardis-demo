@@ -11,7 +11,14 @@ Based on my research, here's the detailed breakdown:
 - For **complex integration requirements with multiple external systems**, Gearset's pre-built connectors would save significant development time.
 - For **simpler notification needs or budget-conscious projects**, SFDX-Hardis provides adequate webhook/API capabilities.
 
+I'll create a comprehensive comparison table for these Salesforce deployment approaches across the criteria you mentioned.This comparison table covers the key deployment methods you mentioned across your specific criteria. A few additional insights:
 
+**For large data + external APIs + unlocked packages**, your best options are:
+1. **Home-made pipeline** - Maximum flexibility but requires significant DevOps investment
+2. **SFDX-Hardis** - Good balance of capabilities with lower cost, but requires SFDX expertise
+3. **Gearset** excels in user experience but has limitations with large data and external integrations, while **Change Sets** are really only suitable for simple, small-scale deployments.
+
+The choice often comes down to your team's technical expertise, budget, and specific requirements.
 
 # Gearset vs SFDX-Hardis: Connectors and Webhooks Detailed Comparison
 
