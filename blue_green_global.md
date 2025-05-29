@@ -21,10 +21,10 @@ graph TD
     H[External Integrations] --> E
     
     subgraph "Deployment Process"
-        I[1. Deploy to Green] --> J[2. Validate Green]
-        J --> K[3. Switch Traffic]
-        K --> L[4. Green becomes Blue]
-        L --> M[5. Old Blue becomes Green]
+        I[1-Deploy to Green] --> J[2-Validate Green]
+        J --> K[3-Switch Traffic]
+        K --> L[4-Green becomes Blue]
+        L --> M[5-Old Blue becomes Green]
     end
     
     style C fill:#4A90E2,color:#fff
