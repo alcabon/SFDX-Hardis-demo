@@ -159,7 +159,7 @@ sequenceDiagram
     Users->>Green: All production traffic
     Green-->>Users: v2.0 responses
 ```
- - 
+
  - Rollback Sequence - Emergency rollback procedures and timing
 
 ```mermaid
