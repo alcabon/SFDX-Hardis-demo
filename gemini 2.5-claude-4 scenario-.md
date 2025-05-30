@@ -68,6 +68,20 @@ The diagram provides a comprehensive view of your Salesforce development workflo
     class SF_INT,SF_UAT,SF_PROD sf;
     class Auth_Note,Tech_Note note;
 ```
+
+**Flow Highlights:**
+
+1. Developers use VSCode with the SFDX-Hardis extension to work on tasks in their dedicated Dev Orgs and push feature branches to the GitHub Repo.  
+2. Pushing to feature branches and creating Pull/Merge Requests (PRs/MRs) to major branches (like integration), or merging into major branches, triggers the CI/CD Server.  
+3. The CI/CD Server, using SFDX-Hardis commands, deploys the integration branch to the INT Org.  
+4. After successful integration and UAT PR/MR creation, the CI/CD Server deploys the uat branch to the UAT Org.  
+5. After successful UAT and Production PR/MR creation, the CI/CD Server deploys the production branch to the PROD Org.  
+6. Throughout the process, the CI/CD server posts feedback (like test results and validation status) back to the PRs/MRs in GitHub.  
+7. Jira tickets are linked to commits and PRs/MRs in GitHub, and the CI/CD server can update Jira tickets with deployment statuses (e.g., "UAT\_DEPLOYED").
+
+   For SFDX-Hardis with GitHub, the CI/CD server isn't a separate installation - it uses **GitHub Actions** as the CI/CD server, which is GitHub's built-in automation platform.
+
+
 ```mermaid
    graph TD
     subgraph "A-Development Environment"
