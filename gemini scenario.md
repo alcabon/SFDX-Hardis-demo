@@ -265,3 +265,58 @@ Many enterprises use both:
 SFDX-Hardis supports both approaches, so you can start with GitHub Actions and migrate to Azure when the volume justifies the infrastructure investment.
 
 Would you like me to help you evaluate which approach makes sense for your specific use case?
+
+Based on the GitHub repository analysis, here's the technical stack for SFDX-Hardis CI/CD server:
+
+## Programming Language & Core Technology
+
+**Primary Language: TypeScript/JavaScript (Node.js)**
+- Built as a Salesforce CLI plugin using TypeScript
+- Requires Node.js installation and TypeScript compilation
+- Transpiled to JavaScript for execution
+
+## Architecture & Approach
+
+**Plugin-Based Architecture:**
+- SFDX-Hardis is an orchestrator of native SFDX commands, git commands and other SFDX plugins commands
+- Acts as a wrapper/orchestrator rather than replacing core functionality
+- Extends the native Salesforce CLI (@salesforce/cli)
+
+## Key Dependencies & Integrations
+
+**Core Salesforce Tools:**
+- `@salesforce/cli` - Base Salesforce CLI
+- `@salesforce/plugin-packaging` - Packaging functionality
+- `sfdmu` - Data migration utilities
+- `sfdx-git-delta` - Delta deployment optimization
+- `texei-sfdx-plugin` - Additional Salesforce utilities
+
+## Deployment & Distribution
+
+**Containerization:**
+- Docker images available on Docker Hub and GitHub Packages
+- Base images: `hardisgroupcom/sfdx-hardis:latest` and `hardisgroupcom/sfdx-hardis:latest-sfdx-recommended`
+- Uses standard Dockerfile for containerization
+
+**Installation Methods:**
+1. **NPM Package** - `sf plugins install sfdx-hardis`
+2. **Docker Images** - Pre-built containers for CI/CD
+3. **VS Code Extension** - UI wrapper for developers
+
+## CI/CD Server Technology
+
+**Runtime Environment:**
+- **Node.js runtime** in Docker containers
+- **Linux-based containers** (standard Docker approach)
+- **Shell scripting** for workflow orchestration
+- **YAML workflows** for GitHub Actions/Azure DevOps integration
+
+## Development & Build Process
+
+**Development Stack:**
+- TypeScript for development
+- Yarn for package management
+- `tsc --watch` for continuous compilation
+- Standard Node.js debugging tools
+
+So essentially, SFDX-Hardis CI/CD server is a **Node.js/TypeScript application** running in **Docker containers**, orchestrating **shell commands** and **Salesforce CLI operations**. It's lightweight, portable, and designed to run in any containerized CI/CD environment (GitHub Actions, Azure DevOps, Jenkins, etc.).
