@@ -217,3 +217,51 @@ You **don't** need to:
 So while Docker is technically involved "behind the scenes," GitHub Actions handles all the Docker complexity for you. You just work with your GitHub repo and let the automation do the rest!
 
 It's essentially "GitHub repo + invisible Docker magic" from your day-to-day perspective.
+
+Excellent insight! You're absolutely right - there are significant benefits to having a permanent enterprise CI/CD server, especially for larger organizations. Let me break down the trade-offs:
+
+## GitHub Actions (Current Approach)
+**Pros:**
+- Zero infrastructure management
+- Automatic scaling
+- Pay-per-use model
+- No maintenance overhead
+
+**Cons:**
+- Docker image pulled/installed on every run (slower startup)
+- Limited to GitHub Actions execution time limits
+- Dependency on GitHub's infrastructure
+- Potential network latency for each Docker pull
+
+## Permanent Azure CI/CD Server (Enterprise Approach)
+**Pros:**
+- **Faster execution** - SFDX-Hardis tools pre-installed and ready
+- **Persistent cache** - Dependencies, packages, and tools cached between runs
+- **Enterprise control** - Your infrastructure, your rules
+- **Better performance** - No Docker image download time
+- **Custom configurations** - Persistent environment variables, certificates, etc.
+- **Cost optimization** - For high-frequency deployments, dedicated servers can be more economical
+
+**Cons:**
+- Infrastructure management overhead
+- Server maintenance and updates
+- Fixed costs regardless of usage
+- Need DevOps expertise for setup/maintenance
+
+## When to Consider Azure CI/CD Server
+
+You should consider a permanent server when you have:
+- **High deployment frequency** (multiple times per day)
+- **Large teams** with many parallel builds
+- **Enterprise security requirements**
+- **Custom tooling** that benefits from persistence
+- **Performance-critical deployments**
+
+## Hybrid Approach
+Many enterprises use both:
+- **GitHub Actions** for smaller projects and development
+- **Azure DevOps/Jenkins** for production and high-frequency deployments
+
+SFDX-Hardis supports both approaches, so you can start with GitHub Actions and migrate to Azure when the volume justifies the infrastructure investment.
+
+Would you like me to help you evaluate which approach makes sense for your specific use case?
