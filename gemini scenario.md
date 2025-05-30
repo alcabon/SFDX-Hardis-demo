@@ -1,4 +1,62 @@
+```mermaid
+ graph TD
+    subgraph "A-Development Environment"
+        Dev["Developer <br> (VSCode + SFDX-Hardis Ext.)"]
+        DevOrg["Salesforce Dev Org <br> (Scratch/Source-Tracked Sandbox)"]
+    end
 
+    subgraph "B-Version Control & CI/CD Orchestration"
+        GitHub["GitHub Repo <br> (Source of Truth for Metadata)"]
+        CICD["CI/CD Server <br> (GitHub Actions, Azure DevOps, Jenkins) <br> Docker Container: Node.js/TypeScript <br> SFDX-Hardis Commands Orchestration"]
+    end
+
+    subgraph "C-Project Management"
+        Jira["Jira <br> (Issue & Task Tracking)"]
+    end
+
+    subgraph "D-Salesforce Environments (Target Orgs)"
+        SF_INT["Salesforce INT Org <br> (Integration Sandbox)"]
+        SF_UAT["Salesforce UAT Org <br> (User Acceptance Testing Sandbox)"]
+        SF_PROD["Salesforce PROD Org <br> (Production Org)"]
+    end
+
+    %% Developer Workflow
+    Dev -->|"1-Develop & Push Feature Branch"| GitHub
+    Dev -->|"Local Sync with Dev Org"| DevOrg
+
+    %% GitHub <> CI/CD Server Interaction
+    GitHub -- "2-Triggers CI/CD on PR & Merge to Major Branches" --> CICD
+    CICD -- "6-Posts PR/MR Results (Validation, Tests)" --> GitHub
+
+    %% CI/CD Server <> Salesforce Orgs Interaction
+    CICD -- "3-Deploys 'integration' branch" --> SF_INT
+    CICD -- "4-Deploys 'uat' branch" --> SF_UAT
+    CICD -- "5-Deploys 'production' branch" --> SF_PROD
+
+    %% Jira Integration
+    GitHub -- "Links PRs/Commits to Jira Tickets" --> Jira
+    CICD -- "Updates Jira Ticket Status (e.g., 'UAT_DEPLOYED')" --> Jira
+
+    %% Technical Architecture Notes
+    Tech_Note["Technical Stack:<br/>• Docker Images: hardisgroupcom/sfdx-hardis<br/>• Runtime: Node.js/TypeScript<br/>• Architecture: CLI Plugin Orchestrator<br/>• Dependencies: @salesforce/cli, sfdmu, git-delta"]
+    CICD -.->|"Technical Details"| Tech_Note
+
+    %% Authentication & Security
+    Auth_Note["Security & Authentication:<br/>• Salesforce Connected Apps (JWT Auth)<br/>• Secure automated deployments<br/>• Environment-specific credentials"]
+    SF_PROD -.->|"Security"| Auth_Note
+
+    classDef dev fill:#D6EAF8,stroke:#2874A6,stroke-width:2px,color:#000;
+    classDef vcs fill:#D1F2EB,stroke:#138D75,stroke-width:2px,color:#000;
+    classDef pm fill:#FCF3CF,stroke:#B7950B,stroke-width:2px,color:#000;
+    classDef sf fill:#FDEDEC,stroke:#C0392B,stroke-width:2px,color:#000;
+    classDef note fill:#F8F9FA,stroke:#6C757D,stroke-width:1px,color:#000;
+
+    class Dev,DevOrg dev;
+    class GitHub,CICD vcs;
+    class Jira pm;
+    class SF_INT,SF_UAT,SF_PROD sf;
+    class Auth_Note,Tech_Note note;
+```
 ```mermaid
    graph TD
     subgraph "A-Development Environment"
