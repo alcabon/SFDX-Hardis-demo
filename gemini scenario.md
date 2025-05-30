@@ -144,3 +144,76 @@ The diagram aimed to show the *actors* and *systems* involved, and the "Explanat
 5. After successful UAT and Production PR/MR creation, the CI/CD Server deploys the production branch to the PROD Org.  
 6. Throughout the process, the CI/CD server posts feedback (like test results and validation status) back to the PRs/MRs in GitHub.  
 7. Jira tickets are linked to commits and PRs/MRs in GitHub, and the CI/CD server can update Jira tickets with deployment statuses (e.g., "UAT\_DEPLOYED").
+
+   For SFDX-Hardis with GitHub, the CI/CD server isn't a separate installation - it uses **GitHub Actions** as the CI/CD server, which is GitHub's built-in automation platform.
+
+Here's how it works:
+
+## GitHub Actions as CI/CD Server
+
+When you initialize sfdx-hardis config, GitHub workflows are automatically copied to your repo. This means:
+
+1. **No separate server needed** - GitHub Actions runs directly in GitHub's cloud infrastructure
+2. **Automatic setup** - SFDX-Hardis provides pre-built workflow templates
+3. **Built into GitHub** - Uses your existing GitHub repository
+
+## Setup Process
+
+Based on the search results, the typical setup involves:
+
+1. **Initialize SFDX-Hardis** in your project:
+   ```bash
+   sf hardis:project:configure:auth
+   ```
+
+2. **Workflow files are created** - SFDX-Hardis automatically generates `.github/workflows/` files in your repository
+
+3. **GitHub Actions triggers** - These workflows run automatically on:
+   - Pull requests
+   - Merges to main branches (integration, uat, production)
+   - Scheduled backups
+
+## Docker Images for CI/CD
+
+SFDX-Hardis provides Docker images specifically for CI/CD environments, including `hardisgroupcom/sfdx-hardis:latest-sfdx-recommended`, which the GitHub Actions workflows use to execute commands.
+
+## Key Benefits
+
+- **No infrastructure management** - GitHub handles the compute resources
+- **Pre-configured workflows** - Ready-to-use templates for Salesforce deployments
+- **Integrated with GitHub** - Automatic status comments on pull requests from CI jobs
+
+So essentially, GitHub Actions **is** your CI/CD server when using SFDX-Hardis with GitHub!
+
+In your case, it's **GitHub repo + Docker**, but the Docker part is handled automatically by GitHub Actions - you don't need to manage it yourself.
+
+Here's the breakdown:
+
+## What You Manage
+- **GitHub repository** - Your code, workflows, and configuration
+
+## What GitHub Actions Manages Automatically
+- **Docker containers** - GitHub Actions automatically pulls and runs the SFDX-Hardis Docker images (like `hardisgroupcom/sfdx-hardis:latest-sfdx-recommended`) when your workflows execute
+
+## How It Works
+1. You push code to your GitHub repo
+2. GitHub Actions workflows trigger
+3. GitHub Actions automatically spins up Docker containers using SFDX-Hardis images
+4. The containers run your deployment commands
+5. Containers are destroyed after the job completes
+
+## From Your Perspective
+You only interact with:
+- Your GitHub repository
+- The workflow YAML files (which SFDX-Hardis generates for you)
+- Your Salesforce orgs
+
+You **don't** need to:
+- Install Docker locally (unless you want to)
+- Manage Docker containers
+- Set up a separate CI/CD server
+- Handle infrastructure
+
+So while Docker is technically involved "behind the scenes," GitHub Actions handles all the Docker complexity for you. You just work with your GitHub repo and let the automation do the rest!
+
+It's essentially "GitHub repo + invisible Docker magic" from your day-to-day perspective.
