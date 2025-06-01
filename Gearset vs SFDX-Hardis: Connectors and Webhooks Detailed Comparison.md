@@ -104,6 +104,49 @@ The choice often comes down to your team's technical expertise, budget, and spec
 | **Setup Complexity** | Low (GUI-based) | Moderate (configuration files) |
 | **Extensibility** | Via Reporting API | Via custom API calls |
 
+Ça va bien, merci ! Je vais détailler les outils mentionnés dans ce tableau comparatif entre Gearset et SFDX-Hardis.
+
+## **Outils de Tests (Testing Tool Integration)**
+
+**Gearset - "Excellent (4+ tools)" :**
+- **Selenium** : Automatisation des tests d'interface utilisateur web
+- **Provar** : Plateforme de test spécialisée pour Salesforce avec enregistrement/rejeu
+- **Copado Robotic Testing** : Tests automatisés low-code pour Salesforce
+- **Testim** : Tests fonctionnels basés sur l'IA
+- **Postman/Newman** : Tests d'API automatisés
+- Intégrations natives avec les pipelines CI/CD pour l'exécution automatique
+
+**SFDX-Hardis - "None" :**
+- Pas d'intégrations natives avec des outils de test
+- Nécessite une configuration manuelle pour connecter des outils externes
+- S'appuie sur les capacités de test standard de SFDX/SF CLI
+
+## **Autres Outils Mentionnés**
+
+### **Analytics/BI Integration**
+**Gearset :**
+- **Tableau** : Visualisation de données avancée
+- **Power BI** : Solution Microsoft de business intelligence
+- **Looker** : Plateforme d'analyse de données Google
+- **Qlik Sense** : Analyse self-service
+- **Grafana** : Dashboards et monitoring (aussi disponible chez SFDX-Hardis)
+
+### **Connecteurs Pré-construits**
+**Gearset (20+) :**
+- Jira, Azure DevOps, GitHub, GitLab
+- Slack, Microsoft Teams
+- Jenkins, CircleCI, Azure Pipelines
+- Et bien d'autres systèmes tiers
+
+**SFDX-Hardis (8-10) :**
+- Connecteurs plus limités, principalement orientés DevOps de base
+
+### **Webhooks**
+- **Gearset** : Webhooks avancés avec payloads personnalisables
+- **SFDX-Hardis** : Notifications API basiques
+
+Cette différence majeure dans l'écosystème d'outils explique pourquoi Gearset est souvent privilégié pour les environnements enterprise nécessitant une intégration poussée avec l'écosystème existant.
+
 ## **Best Use Cases**
 
 ### **Choose Gearset when you need:**
