@@ -1,6 +1,49 @@
 
 # Comparaison Détaillée des Intégrations : Gearset vs SFDX-Hardis  _(Claude 4)_
 
+Excellente distinction ! Cela fait **une différence majeure** selon les versions d'Enterprise.
+
+## **GitHub Enterprise : 2 versions très différentes**
+
+### **GitHub Enterprise Cloud (GHEC)**
+- **Hébergé par GitHub** sur github.com
+- **APIs identiques** à GitHub.com standard
+- **Endpoints** : `api.github.com` (même que version gratuite)
+- **Différences** : Fonctionnalités avancées (SAML, audit, etc.)
+
+### **GitHub Enterprise Server (GHES)** 
+- **Auto-hébergé** dans l'infrastructure client
+- **APIs similaires** mais **endpoints différents**
+- **Endpoints** : `https://votre-instance.com/api/v3/`
+- **Réseaux privés** : Souvent derrière firewall/VPN
+
+## **Impact sur SFDX-Hardis :**
+
+### **GitHub Enterprise Cloud** ✅ **Probablement OK**
+- Utilise les **mêmes APIs** que GitHub.com
+- **Même authentification** (tokens GitHub standard)
+- **Pas de configuration spéciale** requise normalement
+
+### **GitHub Enterprise Server** ❌ **Problématique confirmée**
+- **Endpoints différents** → Échec d'authentification (confirmé par l'issue)
+- **Variables d'environnement** spécifiques requises
+- **Configuration réseau** complexe
+
+## **Tableau corrigé :**
+
+| **Version GitHub** | **Gearset** | **SFDX-Hardis** | **Status** |
+|-------------------|-------------|------------------|------------|
+| **GitHub.com** | ✅ Natif | ✅ Natif | Tous OK |
+| **GitHub Enterprise Cloud** | ✅ Natif | ✅ Probable | APIs identiques |
+| **GitHub Enterprise Server** | ✅ Natif | ❌ Confirmé | Issue #1145 |
+
+### **Questions à poser au client :**
+1. **"Enterprise Cloud"** (hébergé GitHub) ou **"Enterprise Server"** (on-premise) ?
+2. Si Server : **URL de l'instance** et **accessibilité réseau** ?
+3. **Migration possible** vers Enterprise Cloud ?
+
+Cette distinction est **cruciale** car Enterprise Cloud devrait fonctionner sans problème avec SFDX-Hardis, contrairement à Enterprise Server.
+
 ## **Version Control / Git Providers**
 
 | **Outil** | **Gearset** | **SFDX-Hardis** | **Fonctionnalités** |
