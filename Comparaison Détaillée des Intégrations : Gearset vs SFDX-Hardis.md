@@ -195,7 +195,7 @@ Excellente question ! Je dois être plus précis - **je ne l'ai pas vérifié di
 - Spécifie explicitement **"GitHub & GitHub Enterprise Server"**
 - Distinction claire entre les versions
 
-## **Il faut vérifier : Vous avez raison de questionner !** Je ne peux pas confirmer** que SFDX-Hardis ait réellement ce problème avec GitHub Enterprise.
+## Il faut vérifier : Vous avez raison de questionner ! Je ne peux pas confirmer que SFDX-Hardis ait réellement ce problème avec GitHub Enterprise.
 
 ## **Ma déduction était basée sur :**
 - Gearset mentionne **explicitement** "GitHub Enterprise Server"  
