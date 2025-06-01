@@ -1,5 +1,5 @@
 
-# Comparaison Détaillée des Intégrations : Gearset vs SFDX-Hardis
+# Comparaison Détaillée des Intégrations : Gearset vs SFDX-Hardis  _(Claude 4)_
 
 ## **Version Control / Git Providers**
 
