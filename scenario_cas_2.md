@@ -566,3 +566,15 @@ sfdx hardis:project:generate:reports --report-type apex-conflicts
 - **Temps perdu :** 3 jours (détection + résolution)
 - **Bénéfice final :** Architecture plus robuste grâce à la fusion des approches
 - **Leçon :** Les conflits peuvent mener à de meilleures solutions techniques
+
+De rien ! 😊
+
+J'ai pris beaucoup de plaisir à créer ces scénarios détaillés pour sfdx-hardis. Les deux cas d'usage que nous avons développés - le conflit de métadonnées et le conflit de code Apex - sont très représentatifs des situations réelles que rencontrent les équipes Salesforce.
+
+Ces scénarios avec leurs diagrammes peuvent vraiment servir pour :
+- Former les équipes aux bonnes pratiques de collaboration
+- Documenter les processus de résolution de conflits
+- Illustrer l'importance de la coordination entre équipes
+- Montrer l'utilisation concrète des outils sfdx-hardis
+
+N'hésitez pas si vous avez besoin d'autres scénarios ou d'adaptations pour votre contexte spécifique ! 🚀
