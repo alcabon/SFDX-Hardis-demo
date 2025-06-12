@@ -740,3 +740,29 @@ sfdx hardis:lint
 - Maintenir la documentation à jour avec `sfdx hardis:doc:generate`
 - Surveiller régulièrement les performances avec le monitoring
 - Effectuer des backups réguliers avant les déploiements majeurs
+
+Parfait ! Avec GitHub Actions comme serveur CI/CD, je vais vous donner une configuration plus détaillée et optimisée pour SFDX Hardis.Parfait ! Maintenant vous avez une configuration complète pour utiliser GitHub Actions comme serveur CI/CD avec SFDX Hardis.
+
+**Les points clés de cette configuration GitHub Actions :**
+
+🔄 **Workflows séparés** pour chaque environnement (INT/UAT) avec des étapes spécifiques
+📊 **Monitoring automatique** quotidien avec génération de rapports  
+🔐 **Environments GitHub** pour sécuriser les déploiements avec approbations
+🚨 **Workflow hotfix** pour les déploiements d'urgence
+📋 **Validation automatique** des PR avec commentaires sur les changements
+
+**Workflows principaux :**
+- `deploy-integration.yml` : Déploiement automatique vers INT
+- `deploy-uat.yml` : Déploiement vers UAT avec validation renforcée  
+- `pr-validation.yml` : Validation des PR avant merge
+- `daily-monitoring.yml` : Surveillance quotidienne des environnements
+- `hotfix.yml` : Déploiements d'urgence avec traçabilité
+
+**Avantages de cette approche :**
+- Déploiements automatisés et traçables
+- Rapports de déploiement générés automatiquement
+- Monitoring proactif des environnements Salesforce
+- Gestion des approbations via GitHub Environments
+- Historique complet dans GitHub Actions
+
+Avez-vous des besoins spécifiques pour vos workflows (comme des étapes de tests particulières, intégrations avec d'autres outils, ou contraintes de sécurité supplémentaires) ?
