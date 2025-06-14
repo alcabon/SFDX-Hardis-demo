@@ -355,3 +355,218 @@ Solutions:
 ```
 
 C'est effectivement un aspect critique souvent sous-estimé dans les projets enterprise ! 🏢
+
+**BINGO ! 🎯** Vous touchez à l'un des cauchemars les plus vicieux des déploiements Salesforce !
+
+## 💣 **Le piège classique des Profiles/Permission Sets**
+
+### **Problème concret**
+```xml
+<!-- Déploiement d'une simple classe Apex -->
+<Package>
+    <types>
+        <members>MyNewClass</members>
+        <name>ApexClass</name>
+    </types>
+</Package>
+
+<!-- ❌ ERREUR: "FIELD_INTEGRITY_EXCEPTION" -->
+<!-- Parce que 47 profils référencent cette classe ! -->
+```
+
+## 🔄 **Pourquoi c'est un enfer**
+
+### **1. Dépendances cachées omniprésentes**
+```yaml
+Scénario typique:
+  - Ajoute 1 Custom Field
+  - 23 Profiles ont des permissions sur cet objet
+  - 8 Permission Sets aussi
+  - = Il faut TOUS les inclure dans le package !
+```
+
+### **2. Explosion combinatoire**
+```bash
+# Déploiement qui devrait être simple
+CustomObject: Account_Extension__c
+
+# Mais il faut inclure TOUS ces profils:
+- Admin Profile
+- Sales Profile  
+- Marketing Profile
+- Support Profile
+- Partner Profile
+- Customer Profile
+- System Admin Profile
+- ... (+ 40 autres profils)
+
+# Résultat: Package de 2MB devient 50MB !
+```
+
+## 🎯 **Stratégies SFDX-Hardis**
+
+### **1. Auto-inclusion intelligente**
+```yaml
+# .sfdx-hardis.yml
+deployment:
+  autoIncludeProfiles: true
+  profileInclusionStrategy: "referenced-only"  # ou "all", "none"
+  
+  # Exclure les profils système
+  excludeProfiles:
+    - "System Administrator"
+    - "Standard User"
+    - "Chatter*"
+```
+
+### **2. Chunking profiles séparé**
+```xml
+<!-- Chunk 1: Métadonnées core -->
+<Package>
+    <types>
+        <members>Account_Extension__c</members>
+        <name>CustomObject</name>
+    </types>
+</Package>
+
+<!-- Chunk 2: Profiles associés -->
+<Package>
+    <types>
+        <members>Admin</members>
+        <members>Sales</members>
+        <name>Profile</name>
+    </types>
+</Package>
+```
+
+### **3. Profile splitting avancé**
+```javascript
+// SFDX-Hardis fait une analyse de dépendances
+const dependencies = analyzeDependencies('Account_Extension__c');
+
+// Résultat:
+{
+  requiredProfiles: ['Sales', 'Marketing'],
+  optionalProfiles: ['Support', 'Partner'],
+  systemProfiles: ['Admin']  // Gérés différemment
+}
+```
+
+## 🛠️ **Techniques d'optimisation**
+
+### **1. Profile filtering intelligent**
+```yaml
+# Inclusion conditionnelle
+profileDeployment:
+  includeOnlyIf:
+    hasCustomPermissions: true
+    hasCustomObjects: true
+    hasApexClasses: true
+  
+  excludeIfUnchanged: true  # Skip si profile pas modifié
+```
+
+### **2. Permission Sets priorisés**
+```yaml
+# Préférer Permission Sets aux Profiles
+strategy: "permission-sets-first"
+
+# Déploie Permission Sets avant Profiles
+deploymentOrder:
+  1. PermissionSet
+  2. CustomObject  
+  3. Profile (minimal)
+```
+
+### **3. Profil delta intelligent**
+```bash
+# Compare seulement les sections modifiées des profils
+git diff HEAD~1 profiles/Sales.profile-meta.xml
+
+# Génère un profil "patch" au lieu du profil complet
+# = Déploie seulement les nouvelles permissions
+```
+
+## ⚠️ **Problèmes spécifiques**
+
+### **1. Circular dependencies**
+```yaml
+Problème:
+  CustomObject dépend de Profile
+  Profile dépend de CustomObject
+  = Deadlock !
+
+Solution:
+  1. Déploie CustomObject sans permissions
+  2. Déploie Profile avec nouvelles permissions  
+  3. Met à jour CustomObject avec toutes les refs
+```
+
+### **2. Profile explosion**
+```bash
+# Projet avec 200 profils
+# Chaque déploiement inclut TOUS les profils
+# = Package de 100MB+ à chaque fois !
+
+# Solution: Profile sharding
+profiles/
+├── core-profiles.xml      # Profils essentiels seulement
+├── extended-profiles.xml  # Profils métier
+└── system-profiles.xml    # Profils système (rare update)
+```
+
+### **3. Permissions en cascade**
+```yaml
+Ajout d'un field:
+  Account.NewField__c
+  
+Impact automatique:
+  ├── 15 Profiles à mettre à jour
+  ├── 8 Permission Sets
+  ├── 4 Page Layouts  
+  ├── 12 Record Types
+  └── 23 Sharing Rules
+  
+= 62 composants au lieu de 1 !
+```
+
+## 🎯 **Configuration recommandée**
+
+```yaml
+# .sfdx-hardis.yml - Gestion optimisée
+deployment:
+  profileStrategy: "smart-inclusion"
+  
+  # Inclut automatiquement les profils nécessaires
+  autoIncludeProfileDependencies: true
+  
+  # Mais limite l'explosion
+  maxProfilesPerChunk: 20
+  
+  # Sépare les profils système
+  separateSystemProfiles: true
+  
+  # Chunking spécialisé
+  useProfileSharding: true
+  
+  # Skip profils non-modifiés  
+  skipUnchangedProfiles: true
+```
+
+## 📊 **Résultat optimisé**
+
+```bash
+# AVANT
+Package unique: 45,000 composants (timeout garanti)
+
+# APRÈS avec profile sharding
+├── chunk-metadata.xml:     2,000 composants
+├── chunk-core-profiles.xml: 8,000 composants  
+├── chunk-ext-profiles.xml: 12,000 composants
+├── chunk-perms-sets.xml:   5,000 composants
+└── chunk-ui.xml:          18,000 composants
+
+# ✅ Aucun chunk > 20,000, déploiement réussi !
+```
+
+C'est LE défi technique majeur qui fait que beaucoup d'équipes abandonnent les déploiements automatisés... SFDX-Hardis tente de résoudre cette complexité ! 🚀
