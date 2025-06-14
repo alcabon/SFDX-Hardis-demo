@@ -152,3 +152,206 @@ useDeltaDeployment: true     # Dev/Test uniquement
 ```
 
 Vous avez mis le doigt sur LA limitation critique ! C'est pourquoi beaucoup d'équipes gardent le full deployment en production malgré la lenteur. 🎭
+
+
+**Excellente observation ! 🎯** C'est un défi technique majeur des gros projets Salesforce.
+
+## 📦 **Limites des packages Salesforce**
+
+### **Contraintes de l'API Metadata**
+```yaml
+Limites Salesforce:
+- Taille max fichier ZIP: 39 MB
+- Nombre max composants: ~10,000 
+- Timeout API: 10 minutes max
+- Mémoire serveur limitée
+```
+
+## 🔧 **Stratégies de découpage**
+
+### **1. Découpage par type de métadonnées**
+```xml
+<!-- package-1-apex.xml -->
+<types>
+    <members>*</members>
+    <name>ApexClass</name>
+</types>
+
+<!-- package-2-objects.xml -->
+<types>
+    <members>*</members>
+    <name>CustomObject</name>
+</types>
+
+<!-- package-3-flows.xml -->
+<types>
+    <members>*</members>
+    <name>Flow</name>
+</types>
+```
+
+### **2. Découpage par modules métier**
+```xml
+<!-- package-sales.xml -->
+<types>
+    <members>Account*</members>
+    <members>Opportunity*</members>
+    <name>CustomObject</name>
+</types>
+
+<!-- package-service.xml -->
+<types>
+    <members>Case*</members>
+    <members>ServiceContract*</members>
+    <name>CustomObject</name>
+</types>
+```
+
+### **3. Découpage par ordre de dépendances**
+```xml
+<!-- package-1-foundation.xml : Base -->
+<types>
+    <members>RecordType</members>
+    <members>CustomSettings</members>
+</types>
+
+<!-- package-2-objects.xml : Objets -->
+<types>
+    <members>CustomObject</members>
+</types>
+
+<!-- package-3-code.xml : Code -->
+<types>
+    <members>ApexClass</members>
+    <members>ApexTrigger</members>
+</types>
+```
+
+## 🤖 **Comment SFDX-Hardis gère cela**
+
+### **Algorithme de chunking intelligent**
+```javascript
+// Pseudocode simplifié
+function createPackageChunks(components) {
+    const chunks = [];
+    let currentChunk = [];
+    let currentSize = 0;
+    
+    // Tri par priorité de déploiement
+    components.sort(byDependencyOrder);
+    
+    for (component of components) {
+        if (currentSize + component.size > MAX_CHUNK_SIZE) {
+            chunks.push(currentChunk);
+            currentChunk = [component];
+            currentSize = component.size;
+        } else {
+            currentChunk.push(component);
+            currentSize += component.size;
+        }
+    }
+    
+    return chunks;
+}
+```
+
+### **Configuration avancée**
+```yaml
+# .sfdx-hardis.yml
+packageChunking:
+  enabled: true
+  maxComponentsPerPackage: 8000  # Marge de sécurité
+  maxSizePerPackage: 35MB
+  strategy: "dependency-aware"   # ou "type-based", "module-based"
+  
+deploymentSequence:
+  - metadata-foundation
+  - custom-objects  
+  - apex-classes
+  - flows-processes
+  - ui-components
+```
+
+## ⚡ **Optimisations pour gros volumes**
+
+### **1. Déploiement parallèle**
+```bash
+# Déploie plusieurs chunks simultanément
+sf project deploy start --manifest package-1.xml --async &
+sf project deploy start --manifest package-2.xml --async &
+sf project deploy start --manifest package-3.xml --async &
+wait  # Attend que tous se terminent
+```
+
+### **2. Delta chunking intelligent**
+```bash
+# Delta avec chunking automatique
+sfdx hardis:project:deploy:delta --chunked --max-chunk-size 7000
+```
+
+### **3. Validation par chunks**
+```bash
+# Test chaque chunk séparément
+for package in packages/*.xml; do
+    sf project deploy start --manifest $package --check-only
+done
+```
+
+## 🚨 **Problèmes spécifiques aux gros projets**
+
+### **Dépendances inter-chunks**
+```yaml
+Problème: 
+  Chunk 1: CustomObject__c
+  Chunk 2: ApexClass qui référence CustomObject__c
+  
+Solution:
+  - Analyse des dépendances automatique
+  - Ordre de déploiement calculé
+  - Retry logic en cas d'échec
+```
+
+### **Timeout et performance**
+```yaml
+Symptômes:
+  - "UNABLE_TO_LOCK_ROW"
+  - "DEPLOYMENT_TIMEOUT"  
+  - "INSUFFICIENT_ACCESS"
+  
+Solutions:
+  - Retry automatique
+  - Backoff exponentiel
+  - Déploiement séquentiel forcé
+```
+
+## 📊 **Exemple concret**
+
+```bash
+# Projet avec 15,000 composants
+├── chunk-1-foundation.xml     (2,000 composants)
+├── chunk-2-objects.xml        (3,500 composants) 
+├── chunk-3-fields.xml         (4,000 composants)
+├── chunk-4-apex.xml           (2,800 composants)
+├── chunk-5-flows.xml          (1,500 composants)
+└── chunk-6-ui.xml             (1,200 composants)
+
+# Temps total: 45min au lieu de timeout !
+```
+
+## 🎯 **Best practices**
+
+```yaml
+✅ Faire:
+  - Chunking automatique activé
+  - Tests sur chaque chunk
+  - Monitoring des timeouts
+  - Backup avant gros déploiements
+
+❌ Éviter:
+  - Chunks > 8000 composants
+  - Ignorer les dépendances
+  - Déploiement full en une fois
+  - Pas de validation préalable
+```
+
+C'est effectivement un aspect critique souvent sous-estimé dans les projets enterprise ! 🏢
