@@ -60,7 +60,8 @@ mkdir salesforce-demo-project
 cd salesforce-demo-project
 
 # Initialize SFDX project with hardis enhancements
-sfdx hardis:project:create --projectname "Demo Project" --packagename "demo"
+# This runs an interactive wizard to set up the project
+sf hardis project create
 
 # Initialize git repository
 git init
@@ -494,14 +495,21 @@ jobs:
 ### 3.1 Create Feature Branch from JIRA Ticket
 
 ```bash
-# Start from JIRA ticket: DEMO-123 "Add Customer Type Validation"
-# SFDX-Hardis can auto-create branches from JIRA tickets
-sfdx hardis:project:create:branch --jira-ticket DEMO-123 --type feature
+# SFDX-Hardis provides an interactive wizard to start working on a task
+# This command handles branch creation, org setup, and environment initialization
+sf hardis work new
+
+# The wizard will prompt you for:
+# 1. Target branch (integration, preprod, etc.)
+# 2. Project (if configured) 
+# 3. Task name/JIRA ticket (e.g., DEMO-123 Add Customer Type Validation)
+# 4. Scratch org or sandbox preference
+# 5. Environment configuration
 
 # Alternative: Manual branch creation with JIRA reference
 git checkout -b feature/DEMO-123-customer-validation
 
-# Create local development scratch org
+# Create local development scratch org (if not done by wizard)
 sfdx hardis:org:create --scratch --config dev --alias DevOrg
 ```
 
