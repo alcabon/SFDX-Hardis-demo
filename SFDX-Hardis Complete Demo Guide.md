@@ -1,5 +1,197 @@
 # SFDX-Hardis Complete Demo Guide
 
+```mermaid
+graph TB
+    subgraph "Project Root"
+        SFDX[".sfdx-hardis.yml<br/>🎯 Master Configuration"]
+        PROJ["sfdx-project.json<br/>📦 Project Definition"]
+        GIT[".gitignore<br/>🚫 Git Exclusions"]
+        README["README.md<br/>📖 Documentation"]
+    end
+
+    subgraph "Configuration Files"
+        subgraph "config/"
+            SCRATCH_DEV["project-scratch-def.json<br/>🔧 Dev Environment"]
+            SCRATCH_INT["project-scratch-def-integration.json<br/>🔧 Integration Environment"]
+            SCRATCH_UAT["project-scratch-def-uat.json<br/>🔧 UAT Environment"]
+            PMD["pmd-ruleset.xml<br/>🔍 Code Quality Rules"]
+            ESLINT[".eslintrc.json<br/>⚡ Lightning Linting"]
+        end
+    end
+
+    subgraph "Source Code"
+        subgraph "force-app/main/default/"
+            subgraph "objects/Account/"
+                FIELD["fields/Customer_Type__c.field-meta.xml<br/>📝 Custom Field"]
+                VALIDATION["validationRules/Customer_Type_Required.validationRule-meta.xml<br/>✅ Validation Rule"]
+            end
+            
+            subgraph "classes/"
+                APEX_CLASS["AccountController.cls<br/>🧠 Apex Logic"]
+                APEX_TEST["AccountControllerTest.cls<br/>🧪 Test Class"]
+            end
+            
+            subgraph "lwc/"
+                LWC_JS["customerTypeSelector/customerTypeSelector.js<br/>⚡ Lightning Component"]
+                LWC_HTML["customerTypeSelector/customerTypeSelector.html<br/>🎨 Component Template"]
+                LWC_META["customerTypeSelector/customerTypeSelector.js-meta.xml<br/>📋 Component Metadata"]
+            end
+        end
+    end
+
+    subgraph "Data Management"
+        subgraph "data/"
+            DATA_PLAN_DEV["dev-data-plan.json<br/>🗃️ Dev Data Plan"]
+            DATA_PLAN_INT["integration-data-plan.json<br/>🗃️ Integration Data Plan"]
+            DATA_PLAN_UAT["uat-data-plan.json<br/>🗃️ UAT Data Plan"]
+            ACCOUNT_CSV["Account.csv<br/>📊 Test Accounts"]
+            CONTACT_CSV["Contact.csv<br/>📊 Test Contacts"]
+        end
+    end
+
+    subgraph "Scripts & Automation"
+        subgraph "scripts/"
+            subgraph "apex/"
+                SETUP_DEV["setup-dev-data.apex<br/>🔧 Dev Data Setup"]
+                SETUP_INT["setup-integration-data.apex<br/>🔧 Integration Setup"]
+                SETUP_UAT["setup-uat-data.apex<br/>🔧 UAT Setup"]
+                POST_DEPLOY["post-data-setup.apex<br/>📤 Post-Deploy Hook"]
+            end
+            
+            subgraph "shell/"
+                PRE_DEPLOY["pre-deploy-validation.sh<br/>✅ Pre-Deploy Checks"]
+                POST_DEPLOY_SH["post-deploy-notification.sh<br/>📧 Notifications"]
+            end
+        end
+    end
+
+    subgraph "CI/CD Pipeline"
+        subgraph ".github/workflows/"
+            CICD["ci-cd.yml<br/>🔄 GitHub Actions Pipeline"]
+        end
+        
+        subgraph "Secrets (GitHub)"
+            DEVHUB_SECRET["DEVHUB_SFDX_URL<br/>🔐 Dev Hub Auth"]
+            SLACK_SECRET["SLACK_WEBHOOK_URL<br/>🔐 Slack Integration"]
+        end
+    end
+
+    subgraph "Generated Files"
+        subgraph "Generated Documentation"
+            DOC_HTML["docs/index.html<br/>📚 Auto-generated Docs"]
+            APEX_DOC["docs/apex/index.html<br/>📖 Apex Documentation"]
+            LWC_DOC["docs/lwc/index.html<br/>⚡ LWC Documentation"]
+        end
+        
+        subgraph "Reports"
+            COVERAGE["reports/coverage.xml<br/>📊 Test Coverage"]
+            PMD_REPORT["reports/pmd-report.html<br/>🔍 Code Quality Report"]
+            SECURITY["reports/security-scan.json<br/>🛡️ Security Scan"]
+        end
+    end
+
+    %% Configuration Relationships
+    SFDX --> SCRATCH_DEV
+    SFDX --> SCRATCH_INT
+    SFDX --> SCRATCH_UAT
+    SFDX --> PMD
+    SFDX --> DATA_PLAN_DEV
+    SFDX --> DATA_PLAN_INT
+    SFDX --> DATA_PLAN_UAT
+
+    %% Data Relationships
+    DATA_PLAN_INT --> ACCOUNT_CSV
+    DATA_PLAN_INT --> CONTACT_CSV
+    DATA_PLAN_UAT --> ACCOUNT_CSV
+    DATA_PLAN_UAT --> CONTACT_CSV
+
+    %% Script Relationships
+    SFDX --> SETUP_DEV
+    SFDX --> SETUP_INT
+    SFDX --> SETUP_UAT
+    SFDX --> PRE_DEPLOY
+    SFDX --> POST_DEPLOY_SH
+    DATA_PLAN_INT --> POST_DEPLOY
+
+    %% CI/CD Relationships
+    CICD --> DEVHUB_SECRET
+    CICD --> SLACK_SECRET
+    CICD --> SFDX
+    CICD --> PMD
+    CICD --> ESLINT
+
+    %% Source Dependencies
+    APEX_TEST --> APEX_CLASS
+    LWC_JS --> FIELD
+    VALIDATION --> FIELD
+
+    %% Generated Content
+    SFDX --> DOC_HTML
+    APEX_CLASS --> APEX_DOC
+    LWC_JS --> LWC_DOC
+    CICD --> COVERAGE
+    PMD --> PMD_REPORT
+    CICD --> SECURITY
+
+    %% Styling
+    classDef configFile fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef sourceFile fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef dataFile fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef scriptFile fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef cicdFile fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef generatedFile fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+
+    class SFDX,SCRATCH_DEV,SCRATCH_INT,SCRATCH_UAT,PMD,ESLINT,PROJ configFile
+    class FIELD,VALIDATION,APEX_CLASS,APEX_TEST,LWC_JS,LWC_HTML,LWC_META sourceFile
+    class DATA_PLAN_DEV,DATA_PLAN_INT,DATA_PLAN_UAT,ACCOUNT_CSV,CONTACT_CSV dataFile
+    class SETUP_DEV,SETUP_INT,SETUP_UAT,POST_DEPLOY,PRE_DEPLOY,POST_DEPLOY_SH scriptFile
+    class CICD,DEVHUB_SECRET,SLACK_SECRET cicdFile
+    class DOC_HTML,APEX_DOC,LWC_DOC,COVERAGE,PMD_REPORT,SECURITY generatedFile
+```
+Perfect! I've created a comprehensive Mermaid diagram that shows all the files involved in the SFDX-Hardis demo and their relationships. Here's what the diagram illustrates:
+
+## 🎯 **Key File Categories:**
+
+### **🔧 Configuration Files (Blue)**
+- `.sfdx-hardis.yml` - Master configuration orchestrating everything
+- Scratch org definitions for each environment
+- Code quality rules (PMD, ESLint)
+
+### **📝 Source Code (Purple)**
+- Custom field and validation rule (our demo feature)
+- Apex classes and tests
+- Lightning Web Components
+
+### **🗃️ Data Files (Green)**
+- Environment-specific data plans
+- CSV files with test data
+- Data seeding configurations
+
+### **🔨 Scripts (Orange)**
+- Apex scripts for environment setup
+- Shell scripts for automation hooks
+- Pre/post deployment validations
+
+### **🔄 CI/CD Files (Pink)**
+- GitHub Actions workflow
+- Secrets management
+- Pipeline configuration
+
+### **📊 Generated Files (Light Green)**
+- Auto-generated documentation
+- Test coverage reports
+- Security scan results
+
+## 🔗 **Key Relationships Shown:**
+
+1. **Central Orchestration**: `.sfdx-hardis.yml` controls most other files
+2. **Environment Separation**: Different configs for dev/integration/UAT
+3. **Data Flow**: Data plans link to CSV files and setup scripts
+4. **Automation Chain**: CI/CD triggers quality checks and generates reports
+5. **Dependencies**: Tests depend on classes, components use custom fields
+
+This diagram demonstrates how SFDX-Hardis creates a cohesive ecosystem where configuration drives behavior, and everything is interconnected through the central YAML file!
+
 ## Overview
 
 This demo showcases how **sfdx-hardis** streamlines Salesforce DevOps by delivering a task from development through integration to UAT using scratch orgs and automated CI/CD pipelines.
