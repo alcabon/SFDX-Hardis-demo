@@ -299,18 +299,41 @@ environments:
 
 ### **🤖 AI-Enhanced Capabilities**
 
-#### **📚 Documentation Generation**
-- **Auto-generated project docs** with MkDocs
-- **Apex class documentation** with AI summaries
-- **Flow visual documentation** with Mermaid diagrams
-- **Release notes** from JIRA tickets and git history
-
-#### **🔍 Intelligent Analysis**
+#### **🧠 Agentforce Integration (Native Salesforce AI)**
 ```bash
-sf hardis project audit          # Complete project health analysis
-sf hardis lint access           # Security permissions audit
-sf hardis project clean references  # Auto-clean unused references
+# Configure Agentforce for SFDX-Hardis
+USE_AGENTFORCE=true
+GENERIC_AGENTFORCE_PROMPT_TEMPLATE=SfdxHardisGenericPrompt
 ```
+
+**Agentforce Requirements:**
+- ✅ **Salesforce Foundations**: 200,000 Einstein Prompts included (FREE)
+- ✅ **Prompt Template**: `SfdxHardisGenericPrompt` (Flex type)
+- ✅ **Permission Set**: `Prompt Template User` assigned
+- ✅ **Native Integration**: No external API keys needed
+
+#### **🔗 Multi-LLM Support via LangChain**
+```bash
+# OpenAI Integration
+USE_LANGCHAIN_LLM=true
+LANGCHAIN_LLM_PROVIDER=openai
+LANGCHAIN_LLM_MODEL=gpt-4o-mini
+
+# Anthropic Claude Integration  
+LANGCHAIN_LLM_PROVIDER=anthropic
+LANGCHAIN_LLM_MODEL=claude-3.5-sonnet
+
+# Local Ollama Integration
+LANGCHAIN_LLM_PROVIDER=ollama
+LANGCHAIN_LLM_MODEL=qwen2.5-coder:14b
+```
+
+#### **📚 AI-Powered Automation**
+- **Deployment Error Analysis**: Automatic error resolution suggestions
+- **Flow Documentation**: Visual Mermaid diagrams with AI descriptions
+- **Apex Documentation**: Auto-generated class and method documentation
+- **Object Analysis**: Comprehensive metadata understanding
+- **Release Notes**: Intelligent changelog generation from commits
 
 ### **🔔 Notification & Monitoring**
 
@@ -451,7 +474,8 @@ sf hardis project create
 - **Docker**: Containerized CI/CD
 - **GitHub Actions**: Automation engine
 - **Mermaid**: Visual documentation
-- **AI Integration**: OpenAI/Salesforce AI
+- **Agentforce**: Native Salesforce AI (FREE with Foundations)
+- **LangChain**: Multi-LLM integration (OpenAI, Claude, Ollama)
 
 #### **Integration Points**
 ```
