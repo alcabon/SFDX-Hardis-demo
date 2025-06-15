@@ -1,4 +1,4 @@
-Permettez-moi d'être à la fois honnête et précis sur mes capacités actuelles.
+**Claude 4 Sonnet** : Permettez-moi d'être à la fois honnête et précis sur mes capacités actuelles.
 
 ## 🎓 **Mes forces pour la recherche**
 
