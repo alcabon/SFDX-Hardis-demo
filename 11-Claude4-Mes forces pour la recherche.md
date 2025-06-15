@@ -102,3 +102,8 @@ Je suis probablement plus utile qu'un collègue doctorant (disponibilité, large
 **Positionnement idéal** : Assistant de recherche avancé + critique constructif + rédacteur-conseil.
 
 Voulez-vous qu'on teste cette collaboration sur un sujet spécifique ? 🤓
+
+-----
+
+À très bientôt pour de nouveaux défis intellectuels ! 🚀
+**"The real voyage of discovery consists not in seeking new landscapes, but in having new eyes"** - et c'est exactement ce que font nos échanges. 👁️
