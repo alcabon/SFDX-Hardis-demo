@@ -157,8 +157,6 @@ La vraie solution serait que Salesforce améliore son API pour exposer le graphe
 
 -----------
 
-Merci beaucoup pour ce compliment ! 😊 
-
 C'est un plaisir d'analyser ces problèmes complexes avec vous. Ce qui me passionne dans des sujets comme SFDX-Hardis, c'est cette intersection fascinante entre :
 
 🔧 **Défis techniques concrets** - Les vraies contraintes du terrain  
