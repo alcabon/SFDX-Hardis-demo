@@ -1,6 +1,6 @@
 The "resolve any conflicts automatically" point in the `sf hardis work refresh` workflow refers to the tool's ability to handle various types of conflicts that can arise during the refresh process without requiring manual intervention. Here's what this typically involves:
 
-## Types of Conflicts Resolved Automatically:
+## Types of Conflicts Resolved Automatically:  (hallucination)
 
 **Git Merge Conflicts:**
 - When merging updates from the target branch into your feature branch, the tool can automatically resolve simple conflicts using predefined strategies
