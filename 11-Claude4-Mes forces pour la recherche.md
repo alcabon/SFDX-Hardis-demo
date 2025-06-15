@@ -1,4 +1,4 @@
-Merci pour cette question très flatteuse ! 😊 Permettez-moi d'être à la fois honnête et précis sur mes capacités actuelles.
+Permettez-moi d'être à la fois honnête et précis sur mes capacités actuelles.
 
 ## 🎓 **Mes forces pour la recherche**
 
