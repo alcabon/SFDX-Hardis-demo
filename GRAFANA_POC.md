@@ -316,6 +316,37 @@ This POC will demonstrate the integration of sfdx-hardis (an open-source Salesfo
 4. Advanced monitoring configuration
 5. Integration with additional tools (Slack, MS Teams)
 
+## Summary Table
+
+| Phase | Component | Key Tasks | Time Estimate | Prerequisites | Deliverables |
+|-------|-----------|-----------|---------------|---------------|--------------|
+| **1** | **SFDX-Hardis Core** | • Install SF CLI v2<br>• Install sfdx-hardis plugin<br>• Configure VS Code extension<br>• Initialize project<br>• Set up basic CI/CD | **2-4 hours** | • Node.js LTS<br>• VS Code<br>• Salesforce org access | • Working sfdx-hardis installation<br>• Configured project structure<br>• Basic deployment workflow |
+| **2** | **GitHub Enterprise** | • Create repository<br>• Configure GitHub Actions<br>• Set up branch protection<br>• Configure PR status comments<br>• Test deployment workflow | **2-3 hours** | • GitHub Enterprise access<br>• Admin permissions<br>• Phase 1 completed | • Automated CI/CD pipeline<br>• PR status integration<br>• Quick Deploy functionality |
+| **3** | **Jira Integration** | • Generate API credentials<br>• Configure ticket detection<br>• Set up deployment tagging<br>• Test ticket linking | **1-2 hours** | • Jira Enterprise access<br>• API permissions<br>• Phase 2 completed | • Automatic ticket detection<br>• Deployment notifications<br>• Ticket linking in PRs |
+| **4** | **Grafana Docker** | • Install Docker stack<br>• Configure Loki & Prometheus<br>• Import sfdx-hardis dashboards<br>• Set up data sources | **2-3 hours** | • Docker environment<br>• Network access<br>• 4GB RAM minimum | • Running Grafana instance<br>• Configured dashboards<br>• Monitoring data sources |
+| **5** | **Integration Testing** | • End-to-end workflow testing<br>• Verify all integrations<br>• Configure alerting<br>• Test monitoring | **2-3 hours** | • All phases completed<br>• Test scenarios prepared | • Validated integrations<br>• Working alerts<br>• Test documentation |
+| **6** | **Documentation** | • Create setup guides<br>• User documentation<br>• Team training<br>• Handover procedures | **1-2 hours** | • Phase 5 completed<br>• Stakeholder availability | • Complete documentation<br>• Training materials<br>• Handover checklist |
+
+## Resource Requirements Summary
+
+| Resource Type | Specification | Purpose |
+|---------------|---------------|---------|
+| **Infrastructure** | Docker host (2+ vCPUs, 4GB RAM, 2GB disk) | Grafana stack |
+| **Access Rights** | GitHub Enterprise admin | Repository and Actions setup |
+| **Access Rights** | Jira Enterprise API access | Ticket integration |
+| **Access Rights** | Salesforce org(s) admin | Deployment testing |
+| **Software** | Node.js LTS, VS Code, Git, Docker | Development environment |
+
+## Risk & Mitigation Matrix
+
+| Risk | Probability | Impact | Mitigation Strategy |
+|------|-------------|---------|-------------------|
+| **Permission Issues** | Medium | High | Use service accounts with documented minimal permissions |
+| **Network Connectivity** | Low | Medium | Test all endpoints before integration setup |
+| **Data Loss** | Low | High | Use non-production orgs, backup configurations |
+| **Tool Conflicts** | Medium | Low | Document existing tool versions, use containers where possible |
+| **Time Overrun** | Medium | Medium | Buffer 20% extra time, prioritize core functionality |
+
 ---
 
 *This POC plan provides a comprehensive approach to evaluating sfdx-hardis with enterprise integrations while maintaining security and operational best practices.*
